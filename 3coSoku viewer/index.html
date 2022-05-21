@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+		<link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" /> <!-- blank favicon --!>
+		
+		<title>IcoSoKu visualisation tool</title>
+		<!-- All dependencies of the webapp --!>
+		<script src="./vendor/stats.js/build/stats.js"></script>
+		<script src="./vendor/clingo-wasm/clingo.js"></script>
+		<script src="./src/clingo-emscripten-module.js"></script>
+		<script src="./vendor/tweakpane/tweakpane-2.2.1.min.js"></script>
+		<script src="./vendor/three/build/three.js"></script>
+		<script src="./vendor/three/examples/jsm/lines/LineMaterial.js"></script>
+		<script src="./vendor/three/examples/jsm/lines/LineSegmentsGeometry.js"></script>
+		<script src="./vendor/three/examples/jsm/lines/Wireframe.js"></script>
+		<script src="./vendor/three/examples/jsm/lines/WireframeGeometry2.js"></script>
+		<script src="./vendor/three/examples/jsm/controls/OrbitControls.js"></script>
+		<script src="./assets/fonts/CMU Sans Serif_Medium.js"></script>
+	</head>
+	<link type="text/css" rel="stylesheet" href="css/style.css">
+	<body>
+
+		<!-- The modal --!>
+		<div id="moreinfo" class="bottom"><button id="aboutbutton">?</button></div>
+		<div id="about" class="modal">
+  			<div class="modal-content">
+				<span class="close">&times;</span>
+				<p>IcoSoKu visualisation tool and solver by Nicola Rizzo and Agostino Dovier</p>
+				<p>IcoSoKu is a mechanical puzzle about arranging some triangular tiles, from the fixed set of 20 tiles shipping with the game, on the faces of an icosahedron in order to match the numbers on the vertices of the icosahedron, defined by the current instance of the game. Each instance is an arrangement of the numbers from 1 to 12 on the vertices. Click the "Solve!" button to see a solved instance!</p>
+				<p>This tool was developed at the <a href="http://clp.dimi.uniud.it/">CLP Lab</a> of the University of Udine (Italy) and at the <a href="https://scuolasuperiore.uniud.it/">School for Advanced Studies</a> of the University of Udine, using cool technologies: <a href="https://threejs.org/">Three.js</a>, <a href="https://github.com/domoritz/clingo-wasm">clingo-wasm</a> (<a href="https://potassco.org/clingo/">clingo</a> compiled to WebAssembly with <a href="https://emscripten.org/">emscripten</a>), and others.</p>
+				<p>Visit <a href="https://github.com/nrizzo/3coSoKu">github.com/nrizzo/3coSoKu</a> to get the source and for more info on IcoSoKu, its strongly NP-complete generalisation 3coSoKu and the solvers we developed.</p>
+			</div>
+		</div>
+		<!-- Code to manage the modal --!>
+		<script>
+			const modal = document.getElementById("about");
+			const btn = document.getElementById("aboutbutton");
+			const span = document.getElementsByClassName("close")[0];
+
+			// click on the button -> opening of the modal
+			btn.onclick = function() {
+				modal.style.display = "block";
+			}
+
+			// click on x or outside the modal -> close the modal
+			span.onclick = function() {
+				modal.style.display = "none";
+			}
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+  				}
+			}
+		</script>
+		<!-- The actual three.js application --!>
+		<script src="./src/main.js"></script>
+	</body>
+</html>
