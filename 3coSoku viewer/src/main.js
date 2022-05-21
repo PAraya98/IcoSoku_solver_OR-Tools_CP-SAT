@@ -458,17 +458,17 @@ function processoutput() {
 }
 
 // GUI
-const pane = new Tweakpane( { title: 'IcoSoKu visualisation tool' } );
+const pane = new Tweakpane( { title: 'Visualización de IcoSoKu' } );
 
 // Tweakpane folder: Controls
 const panecontrols = pane.addFolder( {
-	title: 'Controls',
+	title: 'Controles',
 	expanded: true
 } );
-panecontrols.addButton( { title: 'Toggle vertex naming' } )
+panecontrols.addButton( { title: 'Cambiar nombres de vertices' } )
 	.on( 'click', () => { togglevertexnaming(); } );
 
-panecontrols.addButton( { title: 'Reset view' } )
+panecontrols.addButton( { title: 'Reiniciar vista' } )
 	.on( 'click', () => {
 		if ( window.innerWidth > window.innerHeight ) {
 			const dist = (3.75) / Math.tan( (camera.fov / 2) * Math.PI / 180 );
@@ -484,10 +484,10 @@ panecontrols.addButton( { title: 'Reset view' } )
 
 // Tweakpane subfolder: IcoSoKu Instance
 const paneinput = panecontrols.addFolder( {
-	title: 'IcoSoKu Instance',
+	title: 'Instancia de IcoSoKu',
 	expanded: true
 } );
-paneinput.addButton( { title: 'Random instance' } )
+paneinput.addButton( { title: 'Instancia aleatoria' } )
 	.on( 'click', () => {
 		icorand();
 		cleartiles(); 
@@ -496,7 +496,7 @@ paneinput.addButton( { title: 'Random instance' } )
 	} );
 const paneinputparams = { input: "1,2,3,4,5,6,7,8,9,10,11,12" };
 paneinput.addInput( paneinputparams, 'input' );
-paneinput.addButton( { title: 'Read input' } )
+paneinput.addButton( { title: 'Leer clavijas' } )
 	.on( 'click', () => {
 		cleartiles();
 		if(paneinputparams.input.split(',').length == 12) processguiinput( paneinputparams.input );
@@ -504,13 +504,13 @@ paneinput.addButton( { title: 'Read input' } )
 	} );
 // subfolder end
 
-panecontrols.addButton( { title: 'Solve!' } )
+panecontrols.addButton( { title: 'Resolver!' } )
 	.on( 'click', () => {
 		cleartiles();
 		solve_ico_ortools(input_cap)
 	} );
 
-panecontrols.addButton( { title: 'Clear tiles' } )
+panecontrols.addButton( { title: 'Limpiar fichas' } )
 	.on( 'click', () => {
 		cleartiles();
 	} );
@@ -518,7 +518,7 @@ panecontrols.addButton( { title: 'Clear tiles' } )
 
 // Tweakpane folder: Clingo Output
 const paneclingo = pane.addFolder( {
-	title: 'Output',
+	title: 'Salida del programa',
 	expanded: false
 } );
 const paneclingoparams = {
@@ -529,7 +529,7 @@ paneclingo.addMonitor( paneclingoparams, 'output', { multiline: true, lineCount:
 
 // Tweakpane folder: Settings
 const panesettings = pane.addFolder( {
-	title: 'Settings',
+	title: 'Configuración',
 	expanded: false,
 } );
 const panesettingsparams = {

@@ -22,7 +22,7 @@ $ git clone https://github.com/PAraya98/IcoSokuSolver.git
 ``` 
 $ pip install flask-cors ortools numpy
 ```
-3. Ejecutar el Script de Python `IcoSokuSolver (API+Solver).py` que se encuentra en la raíz del repositorio.
+3. Ejecutar el Script de Python `IcoSokuSolver(API+Solver).py` que se encuentra en la raíz del repositorio.
 ``` 
 $ python IcoSokuSolver (API+Solver).py
 ```
