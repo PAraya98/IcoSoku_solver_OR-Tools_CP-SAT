@@ -24,6 +24,6 @@ $ pip install flask-cors ortools numpy
 ```
 3. Ejecutar el Script de Python `IcoSokuSolver(API+Solver).py` que se encuentra en la raíz del repositorio.
 ``` 
-$ python IcoSokuSolver (API+Solver).py
+$ python IcoSokuSolver(API+Solver).py
 ```
 4. Abrir el `.html` del vizualizador 3D en su navegador web de preferencia`./IcoSoku_Solver (OR-Tools)/3coSoku viewer/index.html`.
