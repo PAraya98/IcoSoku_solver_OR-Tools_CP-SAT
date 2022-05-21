@@ -16,7 +16,7 @@ Siga las siguientes instrucciones para ejecutar el proyecto.
 
 1. Clonar el repositorio:
 ``` 
-$ git clone https://github.com/PAraya98/IcoSokuSolver.git
+$ git clone https://github.com/PAraya98/IcoSoku_solver_OR-Tools_CP-SAT.git
 ```
 2. Instalar las dependencias:
 ``` 
