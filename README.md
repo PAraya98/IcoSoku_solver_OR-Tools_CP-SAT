@@ -4,14 +4,14 @@ Un agente resolutor de instancias del puzzle [IcoSoKu](https://en.wikipedia.org/
 
 Para la creación de este proyecto se utilizó como referencia el proyecto [nrizzo/3coSoKu](https://github.com/nrizzo/3coSoKu), además de una modificación del [visor 3D del icoSoku](https://nrizzo.github.io/3coSoKu/) para ver las soluciones entregadas por el resolutor de OR-Tools desarrollado.
 
-## Requerimientos:
+## Requerimientos
 Para el usó de este repositorio se requiere del siguiente software:
 
 * Python 3.6^
 * Python package manager PIP
 * Navegador web
 
-## Instrucciones:
+## Instrucciones
 Siga las siguientes instrucciones para ejecutar el proyecto.
 
 1. Clonar el repositorio:
