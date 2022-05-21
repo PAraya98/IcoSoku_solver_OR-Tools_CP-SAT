@@ -1,6 +1,6 @@
 # IcoSoku solver with OR-Tools CP-SAT
 
-Un agente resolutor de instancias del puzzle [IcoSoKu](https://en.wikipedia.org/wiki/Icosoku) realizado en Python con la suite de [OR-Tools](https://developers.google.com/optimization) con un modelo [CP-SAT](https://developers.google.com/optimization/cp). Este proyecto fue desarrollado para la asignatura de Inteligencia Artificial de la Universidad de Tarapacá en conjunto a los integrantes del curso.
+Un agente resolutor de instancias del puzzle [IcoSoKu](https://en.wikipedia.org/wiki/Icosoku) realizado en Python con la suite de [OR-Tools](https://developers.google.com/optimization) con un modelo [CP-SAT](https://developers.google.com/optimization/cp). Este proyecto fue desarrollado para la asignatura de Inteligencia Artificial del Departamento de Ingeniería e Informática de la Universidad de Tarapacá en conjunto a los integrantes del curso.
 
 Para la creación de este proyecto se utilizó como referencia el proyecto [nrizzo/3coSoKu](https://github.com/nrizzo/3coSoKu), además de una modificación de su [visor 3D del icoSoku](https://nrizzo.github.io/3coSoKu/) para ver las soluciones entregadas por el resolutor desarrollado.
 
