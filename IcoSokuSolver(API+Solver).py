@@ -24,12 +24,13 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     #NFicha: sera un contador de 0 a 19 enumerando cada cara del ikosoku
     NFicha=0
     for esquina in pesos:
-        if(esquina[0] == esquina[1] == esquina[2]):# en este caso al ser las caras iguales no se toma en cuenta su rotación
-            pesos_r.append([esquina[0], esquina[1], esquina[2], 0, NFicha])
+        [a, b, c] = esquina
+        if(a == b == c):# en este caso al ser las caras iguales no se toma en cuenta su rotación
+            pesos_r.append([a, b, c, 0, NFicha])
         else:        
-            pesos_r.append([esquina[0], esquina[1], esquina[2], 0, NFicha])             
-            pesos_r.append([esquina[1], esquina[2], esquina[0], 1, NFicha])
-            pesos_r.append([esquina[2], esquina[0], esquina[1], 2, NFicha])            
+            pesos_r.append([a, b, c, 0, NFicha])             
+            pesos_r.append([b, c, a, 1, NFicha])
+            pesos_r.append([c, a, b, 2, NFicha])            
         NFicha = NFicha + 1
 
     fichas = []  #Usara el paquete ortools guardando los posibles valores que pueden tener cada esquina de una cara, su rotación y su enumeración           
@@ -49,7 +50,6 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
 
     def get_var_ficha(x):
         return x[4]
-
 
     model.AddAllDifferent(list(map(get_var_ficha, fichas)))
 
@@ -98,10 +98,7 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     #solution_printer = SimpleSolutionCounter(x)
     
     
-    status = solver.Solve(model, solution_printer)  
-
-    if not (status == cp.FEASIBLE or status == cp.OPTIMAL):
-        print("No solution found!")
+    solver.Solve(model, solution_printer)  
 
     str_out = solver.ResponseStats()
     str_out += solution_printer.getSolution() 

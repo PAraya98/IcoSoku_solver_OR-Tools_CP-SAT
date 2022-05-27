@@ -172,13 +172,14 @@ def main(clavijas):
         @param clavijas -> Arreglo de las 12 diferentes clavijas
     '''
     elementos_posibles = [1,2,3,4,5,6,7,8,9,10,11,12]
-    clavijas = list(set(clavijas))
+    aux = list(set(clavijas))
 
-    if len(clavijas) == 12 and set(clavijas).issubset(set(elementos_posibles)) :
+    if len(clavijas) == 12 and set(aux).issubset(set(elementos_posibles)) :
         [A,B,C,D,E,F,G,H,I,J,K,L] = clavijas
+        print(clavijas)
         out, sol = icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L)
         print(out,"\n")
     else:
         print("No se han ingresado las 12 clavijas correctamente!")
     
-main([1,2,3,4,5,6,7,8,9,10,11,12])
+main([12,11,10,1,2,3,4,5,6,7,8,9])
