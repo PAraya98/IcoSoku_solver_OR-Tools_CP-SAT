@@ -87,7 +87,6 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     ###################PRINTER#########################
 
     solver = cp.CpSolver()
-    status = solver.Solve(model)
     solution_printer = SolutionPrinter(fichas, limit=1)
     
     #solver.parameters.num_search_workers = 2
@@ -98,7 +97,7 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     #solution_printer = SimpleSolutionCounter(x)
     
     
-    solver.Solve(model, solution_printer)  
+    solver.SearchForAllSolutions(model, solution_printer)  
 
     str_out = solver.ResponseStats()
     str_out += solution_printer.getSolution() 
@@ -144,14 +143,15 @@ class SolutionPrinter(cp.CpSolverSolutionCallback):
             elif(self.Value(self.__fichas[i][3]) == 2):
                 self.__sol_str += "R: 240°" + " "
             self.__sol_str += "\n"
-            self.__sol_fichas.append(
-                    [   self.Value(self.__fichas[i][0]),
-                        self.Value(self.__fichas[i][1]),
-                        self.Value(self.__fichas[i][2]),
-                        self.Value(self.__fichas[i][3]),
-                        self.Value(self.__fichas[i][4]) 
-                    ]                
-            )           
+            if(self.__solution_count == 1):
+                self.__sol_fichas.append(
+                        [   self.Value(self.__fichas[i][0]),
+                            self.Value(self.__fichas[i][1]),
+                            self.Value(self.__fichas[i][2]),
+                            self.Value(self.__fichas[i][3]),
+                            self.Value(self.__fichas[i][4]) 
+                        ]                
+                    )           
         if self.__limit > 0 and self.__solution_count >= self.__limit:
             self.StopSearch() 
 

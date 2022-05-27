@@ -87,8 +87,7 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     ###################PRINTER#########################
 
     solver = cp.CpSolver()
-    status = solver.Solve(model)
-    solution_printer = SolutionPrinter(fichas, limit=1)
+    solution_printer = SolutionPrinter(fichas, limit=2)
     
     #solver.parameters.num_search_workers = 2
     #solver.parameters.symmetry_level = 2
@@ -98,7 +97,7 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     #solution_printer = SimpleSolutionCounter(x)
     
     
-    status = solver.Solve(model, solution_printer)  
+    status = solver.SearchForAllSolutions(model, solution_printer)  
 
     if not (status == cp.FEASIBLE or status == cp.OPTIMAL):
         print("No solution found!")
@@ -147,17 +146,18 @@ class SolutionPrinter(cp.CpSolverSolutionCallback):
             elif(self.Value(self.__fichas[i][3]) == 2):
                 self.__sol_str += "R: 240°" + " "
             self.__sol_str += "\n"
-            self.__sol_fichas.append(
-                    [   self.Value(self.__fichas[i][0]),
-                        self.Value(self.__fichas[i][1]),
-                        self.Value(self.__fichas[i][2]),
-                        self.Value(self.__fichas[i][3]),
-                        self.Value(self.__fichas[i][4]) 
-                    ]                
-            )           
+            if(self.__solution_count == 1):
+                self.__sol_fichas.append(
+                        [   self.Value(self.__fichas[i][0]),
+                            self.Value(self.__fichas[i][1]),
+                            self.Value(self.__fichas[i][2]),
+                            self.Value(self.__fichas[i][3]),
+                            self.Value(self.__fichas[i][4]) 
+                        ]                
+                    )   
+        self.__sol_str += "\n"        
         if self.__limit > 0 and self.__solution_count >= self.__limit:
             self.StopSearch() 
-
     def getSolucion(self):
         def get_solution(x):
             return [x[0], x[1], x[2]]
@@ -181,4 +181,4 @@ def main(clavijas):
     else:
         print("No se han ingresado las 12 clavijas correctamente!")
     
-main([1,1,11,2,10,3,9,4,8,5,7,6])
+main([11, 5, 7, 2,10, 3, 4, 9, 1,12, 6, 8])
