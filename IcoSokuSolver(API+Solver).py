@@ -178,7 +178,7 @@ def icosoku(parametros = None):
     clavijas = list(map(int, parametros.split(',')))
     aux = list(set(list(map(int, parametros.split(',')))))
 
-    if len(clavijas) == 12 and set(aux).issubset(set(elementos_posibles)) :
+    if len(aux) == 12 and set(aux).issubset(set(elementos_posibles)) :
         [A,B,C,D,E,F,G,H,I,J,K,L] = clavijas
         out, sol = icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L)
         print(out,"\n")

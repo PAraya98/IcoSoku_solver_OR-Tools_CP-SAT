@@ -174,11 +174,11 @@ def main(clavijas):
     elementos_posibles = [1,2,3,4,5,6,7,8,9,10,11,12]
     aux = list(set(clavijas))
 
-    if len(clavijas) == 12 and set(aux).issubset(set(elementos_posibles)) :
+    if len(aux) == 12 and set(aux).issubset(set(elementos_posibles)) :
         [A,B,C,D,E,F,G,H,I,J,K,L] = clavijas
         out, sol = icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L)
         print(out,"\n")
     else:
         print("No se han ingresado las 12 clavijas correctamente!")
     
-main([12,11,10,1,2,3,4,5,6,7,8,9])
+main([1,1,11,2,10,3,9,4,8,5,7,6])
