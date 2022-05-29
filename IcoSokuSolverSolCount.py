@@ -155,7 +155,6 @@ class SolutionPrinter(cp.CpSolverSolutionCallback):
 
         self.__solution_count += 1
         print(f"Solution #{self.__solution_count}")
-        print()
 
            
         if self.__limit > 0 and self.__solution_count >= self.__limit:
