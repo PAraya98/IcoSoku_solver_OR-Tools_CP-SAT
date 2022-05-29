@@ -1,5 +1,8 @@
 from ortools.sat.python import cp_model as cp
 import numpy as np
+import json
+from flask import Flask, jsonify
+from flask_cors import CORS
 
 #SOLVER
 def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
@@ -84,7 +87,7 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     ###################PRINTER#########################
 
     solver = cp.CpSolver()
-    solution_printer = SolutionPrinter(fichas, limit=1)
+    solution_printer = SolutionPrinter(fichas, clavijas, limit=0)
     
     #solver.parameters.num_search_workers = 2
     #solver.parameters.symmetry_level = 2
@@ -109,50 +112,52 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
 
 class SolutionPrinter(cp.CpSolverSolutionCallback):
     """SolutionPrinter"""
-    def __init__(self, fichas, limit=0):
+    def __init__(self, fichas, clavijas, limit=0):
         cp.CpSolverSolutionCallback.__init__(self)
-
         self.__fichas = fichas
+        self.__clavijas = clavijas
         self.__limit = limit
         self.__sol_fichas = []
         self.__solution_count = 0
         self.__sol_str = ""
+        self.__err_count = 0
 
     def OnSolutionCallback(self):
+
+        [A,B,C,D,E,F,G,H,I,J,K,L] = self.__clavijas 
+
+        caras =  np.array([
+                    (B, A, C), (A, D, C), (A, E, D), (E, A, F), (B, F, A), 
+                    (F, B, K), (G, K, B), (G, B, C), (H, G, C), (D, H, C), 
+                    (I, D, E), (D, I, H), (I, E, J), (E, F, J), (F, K, J), 
+                    (K, G, L), (H, L, G), (L, H, I), (L, I, J), (K, L, J) 
+        ])
+
+        c = 0
+        for clavija in self.__clavijas:
+            index_list = []
+            j = 0
+            for cara in caras:
+                if clavija == cara[0]:
+                    index_list.append([j,0])
+                elif clavija == cara[1]:
+                    index_list.append([j,1])
+                elif clavija == cara[2]:
+                    index_list.append([j,2])
+                j = j+1
+        if(clavija != sum(self.Value(self.__fichas[i][j]) for i,j in index_list)):
+            self.__err_count+= 1
+            print('[ERR] ERR_COUNT: %i'% self.__err_count, end=' /')
+        else:
+            print('[OK ] ERR_COUNT: %i'% self.__err_count, end=' /')
+        c = c+1
         
-        caras_str = [   'BAC', 'ADC', 'AED', 'EAF', 'BFA', 
-                        'FBK', 'GKB', 'GBC', 'HGC', 'DHC', 
-                        'IDE', 'DIH', 'IEJ', 'EFJ', 'FKJ', 
-                        'KGL', 'HLG', 'LHI', 'LIJ', 'KLJ'
-                    ]
 
         self.__solution_count += 1
+        print(f"Solution #{self.__solution_count}")
+        print()
 
-        
-        self.__sol_str += f"Solution #{self.__solution_count}" + "\n"
-
-        for i in range(20):
-            self.__sol_str += caras_str[i] + " "
-            for j in range(3):
-                self.__sol_str += "%3i" % self.Value(self.__fichas[i][j]) + " "
-            self.__sol_str += "  P: %2i"%self.Value(self.__fichas[i][4]+1) + " "
-            if(self.Value(self.__fichas[i][3]) == 0):
-                self.__sol_str += "R: 0°" + " "
-            elif(self.Value(self.__fichas[i][3]) == 1):
-                self.__sol_str += "R: 120°" + " "
-            elif(self.Value(self.__fichas[i][3]) == 2):
-                self.__sol_str += "R: 240°" + " "
-            self.__sol_str += "\n"
-            if(self.__solution_count == 1):
-                self.__sol_fichas.append(
-                        [   self.Value(self.__fichas[i][0]),
-                            self.Value(self.__fichas[i][1]),
-                            self.Value(self.__fichas[i][2]),
-                            self.Value(self.__fichas[i][3]),
-                            self.Value(self.__fichas[i][4]) 
-                        ]                
-                    )   
-        self.__sol_str += "\n"        
+           
         if self.__limit > 0 and self.__solution_count >= self.__limit:
             self.StopSearch() 
     def getSolucion(self):
@@ -178,6 +183,4 @@ def main(clavijas):
     else:
         print("No se han ingresado las 12 clavijas correctamente!")
     
-main([3, 5, 7, 1, 4, 8, 9, 10, 11, 12, 2, 6])
-
-
+main([11, 5, 7, 2,10, 3, 4, 9, 1,12, 6, 8])
