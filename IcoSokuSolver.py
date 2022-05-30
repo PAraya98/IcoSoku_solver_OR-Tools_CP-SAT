@@ -5,6 +5,20 @@ import numpy as np
 def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     model = cp.CpModel()
 
+
+
+    #Los valores de la A hasta la L, tomaran los valores de las 12 clavijas
+
+    clavijas = [A,B,C,D,E,F,G,H,I,J,K,L]
+
+    caras =  np.array([
+                (B, A, C), (A, D, C), (A, E, D), (E, A, F), (B, F, A), 
+                (F, B, K), (G, K, B), (G, B, C), (H, G, C), (D, H, C), 
+                (I, D, E), (D, I, H), (I, E, J), (E, F, J), (F, K, J), 
+                (K, G, L), (H, L, G), (L, H, I), (L, I, J), (K, L, J) 
+             ])
+
+
     #La siguiente matriz 2D guardara todas las caras que tiene el icosoku un total de 20.
 
     pesos = np.array([   (0,0,0), (0,0,1), (0,0,2), (0,0,3), (0,1,1), 
@@ -29,6 +43,8 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
             pesos_r.append([esquina[2], esquina[0], esquina[1], 2, NFicha])            
         NFicha = NFicha + 1
 
+    # # # # Declaracion de variables CSP # # # #
+
     fichas = []  #Usara el paquete ortools guardando los posibles valores que pueden tener cada esquina de una cara, su rotación y su enumeración           
     for i in range(20):
         fila = []
@@ -44,6 +60,7 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
         ) 
         fichas.append(fila)
 
+    # # # # Definición de restricción  # # # # 
     def get_var_ficha(x):
         return x[4]
 
@@ -56,16 +73,6 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
 
     #Restricción de la suma
 
-    #Los valores de la A hasta la L, tomaran los valores de las 12 clavijas
-
-    clavijas = [A,B,C,D,E,F,G,H,I,J,K,L]
-
-    caras =  np.array([
-                (B, A, C), (A, D, C), (A, E, D), (E, A, F), (B, F, A), 
-                (F, B, K), (G, K, B), (G, B, C), (H, G, C), (D, H, C), 
-                (I, D, E), (D, I, H), (I, E, J), (E, F, J), (F, K, J), 
-                (K, G, L), (H, L, G), (L, H, I), (L, I, J), (K, L, J) 
-             ])
 
     for clavija in clavijas: #Se pasa por cada clavija segun su número
         CaraEsquina = [] #Ubicara el numero de cara y su numero de rotación que estaran adyacentes a las clavijas
@@ -86,13 +93,7 @@ def icosoku_solver(A,B,C,D,E,F,G,H,I,J,K,L):
     solver = cp.CpSolver()
     solution_printer = SolutionPrinter(fichas, limit=1)
     
-    #solver.parameters.num_search_workers = 2
-    #solver.parameters.symmetry_level = 2
-    #solver.parameters.instantiate_all_variables = True
-    #solver.parameters.optimize_with_max_hs = True
-    #solver.parameters.randomize_search  = True
-    #solution_printer = SimpleSolutionCounter(x)
-    
+
     
     status = solver.SearchForAllSolutions(model, solution_printer)  
 
@@ -178,6 +179,6 @@ def main(clavijas):
     else:
         print("No se han ingresado las 12 clavijas correctamente!")
     
-main([3, 5, 7, 1, 4, 8, 9, 10, 11, 12, 2, 6])
+main([11, 5, 7, 2,10, 3, 4, 9, 1,12, 6, 8])
 
 
